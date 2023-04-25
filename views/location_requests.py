@@ -1,6 +1,6 @@
 import sqlite3
 import json
-from models import Location
+from models import Location, Animal, Employee
 
 LOCATIONS = [
     {
@@ -29,8 +29,20 @@ def get_all_locations():
         SELECT
             a.id,
             a.name,
-            a.address
+            a.address,
+            b.name animal_name,
+            b.breed animal_breed,
+            b.status animal_status,
+            b.location_id animal_location_id,
+            b.customer_id animal_customer_id,
+            e.name employee_name,
+            e.address employee_address,
+            e.location_id employee_location_id
         FROM location a
+        JOIN animal b
+            ON a.id = b.location_id
+        JOIN employee e
+            on a.id = e.location_id
         """)
 
         # Initialize an empty list to hold all location representations
@@ -46,7 +58,24 @@ def get_all_locations():
             # Note that the database fields are specified in
             # exact order of the parameters defined in the
             # Location class above.
-            location = Location(row['id'], row['name'], row['address'])
+            location = Location(row['id'], row['name'],
+                                row['address'])
+
+            animal = Animal(row['id'], row['animal_name'],
+                            row['animal_breed'],
+                            row['animal_status'],
+                            row['animal_location_id'],
+                            row['animal_customer_id'])
+
+            employee = Employee(row['id'], row['employee_name'],
+                                row['employee_address'],
+                                row['employee_location_id'])
+
+            # Create an animal instance from the current row
+            location.animal = animal.__dict__
+
+            # Create an employee instance from the current row
+            location.employee = employee.__dict__
 
             locations.append(location.__dict__)
             # see the notes below for an explanation on this line of code.
