@@ -48,7 +48,8 @@ def get_all_locations():
             # Location class above.
             location = Location(row['id'], row['name'], row['address'])
 
-            locations.append(location.__dict__) # see the notes below for an explanation on this line of code.
+            locations.append(location.__dict__)
+            # see the notes below for an explanation on this line of code.
 
     return locations
 
