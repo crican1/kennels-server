@@ -44,8 +44,8 @@ def get_all_animals():
             a.name,
             a.breed,
             a.status,
-            a.location_id,
             a.customer_id,
+            a.location_id,
             l.name location_name,
             l.address location_address,
             c.name customer_name,
@@ -70,7 +70,7 @@ def get_all_animals():
             # Create an animal instance from the current row
             animal = Animal(row['id'], row['name'], row['breed'],
                             row['status'],
-                            row['location_id'], row['customer_id'])
+                            row['customer_id'], row['location_id'])
 
             # Create a Location instance from the current row
             location = Location(row['id'], row['location_name'],

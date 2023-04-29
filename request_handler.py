@@ -1,7 +1,8 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
 from urllib.parse import urlparse, parse_qs
-from views import (get_all_animals, get_single_animal, create_animal, delete_animal, update_animal,
+from views import (get_all_animals, get_single_animal,
+                   create_animal, delete_animal, update_animal,
                    get_animal_by_location_id, get_animal_by_status, get_all_locations,
                    get_single_location, create_location,
                    delete_location, update_location,
@@ -220,7 +221,6 @@ class HandleRequests(BaseHTTPRequestHandler):
 
     # Here's a method on the class that overrides the parent's method.
     # It handles any PUT request.
-
     def do_PUT(self):
         content_len = int(self.headers.get('content-length', 0))
         post_body = self.rfile.read(content_len)

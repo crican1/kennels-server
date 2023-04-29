@@ -33,8 +33,8 @@ def get_all_locations():
             b.name animal_name,
             b.breed animal_breed,
             b.status animal_status,
-            b.location_id animal_location_id,
             b.customer_id animal_customer_id,
+            b.location_id animal_location_id,
             e.name employee_name,
             e.address employee_address,
             e.location_id employee_location_id
@@ -64,8 +64,8 @@ def get_all_locations():
             animal = Animal(row['id'], row['animal_name'],
                             row['animal_breed'],
                             row['animal_status'],
-                            row['animal_location_id'],
-                            row['animal_customer_id'])
+                            row['animal_customer_id'],
+                            row['animal_location_id'])
 
             employee = Employee(row['id'], row['employee_name'],
                                 row['employee_address'],

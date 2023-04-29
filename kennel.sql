@@ -135,3 +135,5 @@ JOIN employee e
     on a.id = e.location_id
 
 SELECT * FROM Animals ORDER BY id DESC;
+
+SELECT * FROM Animal ORDER BY customer_id ASC
