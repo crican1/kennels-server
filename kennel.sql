@@ -137,3 +137,42 @@ JOIN employee e
 SELECT * FROM Animals ORDER BY id DESC;
 
 SELECT * FROM Animal ORDER BY customer_id ASC
+
+SELECT
+    a.id,
+    a.name,
+    a.address,
+    b.name animal_name,
+    b.breed animal_breed,
+    b.status animal_status,
+    b.location_id animal_location_id,
+    b.customer_id animal_customer_id,
+    e.name employee_name,
+    e.address employee_address,
+    e.location_id employee_location_id
+FROM location a
+JOIN animal b
+    ON a.id = b.location_id
+JOIN employee e
+    on a.id = e.location_id
+
+SELECT * FROM location
+
+SELECT
+    a.id,
+    a.name,
+    a.breed,
+    a.status,
+    a.customer_id,
+    a.location_id,
+    l.name location_name,
+    l.address location_address,
+    c.name customer_name,
+    c.address customer_address,
+    c.email customer_email
+FROM Animal a
+JOIN Location l
+    ON l.id = a.location_id
+JOIN Customer c
+    ON c.id = a.customer_id
+WHERE a.name LIKE ? OR a.breed LIKE?

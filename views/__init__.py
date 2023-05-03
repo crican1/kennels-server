@@ -1,7 +1,8 @@
 from .animal_requests import (get_all_animals, get_single_animal,
                               create_animal,
                               delete_animal,
-                              update_animal,get_animal_by_location_id, get_animal_by_status)
+                              update_animal,get_animal_by_location_id, get_animal_by_status,
+                              search_animals)
 from .location_requests import (get_all_locations,
                                 get_single_location,
                                 create_location, delete_location,update_location)

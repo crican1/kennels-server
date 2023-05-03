@@ -3,7 +3,7 @@ import json
 from urllib.parse import urlparse, parse_qs
 from views import (get_all_animals, get_single_animal,
                    create_animal, delete_animal, update_animal,
-                   get_animal_by_location_id, get_animal_by_status, get_all_locations,
+                   get_animal_by_location_id, get_animal_by_status, search_animals, get_all_locations,
                    get_single_location, create_location,
                    delete_location, update_location,
                    get_single_employee, get_all_employees,
@@ -116,6 +116,8 @@ class HandleRequests(BaseHTTPRequestHandler):
                 response = get_customer_by_email(query['email'][0])
             if query.get('location_id') and resource == 'employees':
                 response = get_employee_by_location_id(query['location_id'][0])
+            if query.get('search') and resource == 'animals':
+                response = search_animals(query['search'][0])
 
 
         self.wfile.write(json.dumps(response).encode())
