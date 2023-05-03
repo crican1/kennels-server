@@ -276,7 +276,7 @@ def search_animals(term):
             ON l.id = a.location_id
         JOIN Customer c
             ON c.id = a.customer_id
-        WHERE a.name LIKE ? OR a.breed LIKE?
+        WHERE a.name LIKE ? OR a.breed LIKE ?
         """, (search_query, search_query))
 
         # Initialize an empty list to hold all animal representations
@@ -304,10 +304,11 @@ def search_animals(term):
             customer = Customer(row['id'],
                                 row['customer_name'],
                                 row['customer_address'],
-                                row['customer_address'])
+                                row['customer_email'])
 
             # Add the dictionary representation of the location to the animal
             animal.location = location.__dict__
+            
             animal.customer = customer.__dict__
 
             # Add the dictionary representation of the animal to the list

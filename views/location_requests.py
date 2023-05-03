@@ -30,11 +30,13 @@ def get_all_locations():
             a.id,
             a.name,
             a.address,
+            b.id animal_id,
             b.name animal_name,
             b.breed animal_breed,
             b.status animal_status,
             b.customer_id animal_customer_id,
             b.location_id animal_location_id,
+            e.id employee_id,
             e.name employee_name,
             e.address employee_address,
             e.location_id employee_location_id
@@ -58,16 +60,19 @@ def get_all_locations():
             # Note that the database fields are specified in
             # exact order of the parameters defined in the
             # Location class above.
-            location = Location(row['id'], row['name'],
+            location = Location(row['id'],
+                                row['name'],
                                 row['address'])
 
-            animal = Animal(row['id'], row['animal_name'],
+            animal = Animal(row['animal_id'],
+                            row['animal_name'],
                             row['animal_breed'],
                             row['animal_status'],
                             row['animal_customer_id'],
                             row['animal_location_id'])
 
-            employee = Employee(row['id'], row['employee_name'],
+            employee = Employee(row['employee_id'],
+                                row['employee_name'],
                                 row['employee_address'],
                                 row['employee_location_id'])
 
@@ -94,19 +99,63 @@ def get_single_location(id):
         SELECT
             a.id,
             a.name,
-            a.address
+            a.address,
+            b.id animal_id,
+            b.name animal_name,
+            b.breed animal_breed,
+            b.status animal_status,
+            b.customer_id animal_customer_id,
+            b.location_id animal_location_id,
+            e.id employee_id,
+            e.name employee_name,
+            e.address employee_address,
+            e.location_id employee_location_id
         FROM location a
-        WHERE a.id = ?
+        JOIN animal b
+            ON a.id = b.location_id
+        JOIN employee e
+            on a.id = e.location_id
         """, ( id, ))
 
         # Load the single result into memory
         data = db_cursor.fetchone()
 
         # Create an location instance from the current row
-        location = Location(data['id'], data['name'],
+        location = Location(data['id'],
+                            data['name'],
                             data['address'])
 
-        return location.__dict__
+        animal = Animal(data['animal_id'],
+                        data['animal_name'],
+                        data['animal_breed'],
+                        data['animal_status'],
+                        data['animal_customer_id'],
+                        data['animal_location_id'])
+
+        employee = Employee(data['employee_id'],
+                            data['employee_name'],
+                            data['employee_address'],
+                            data['employee_location_id'])
+
+        # Initialize an empty list to hold all location representations
+        locations = []
+
+        # Convert datas of data into a Python list
+        dataset = db_cursor.fetchall()
+
+        # Iterate list of data returned from database
+        for data in dataset:
+
+            # Create an animal instance from the current data
+            location.animal = animal.__dict__
+
+            # Create an employee instance from the current data
+            location.employee = employee.__dict__
+
+            locations.append(location.__dict__)
+            # see the notes below for an explanation on this line of code.
+
+    return location.__dict__
 
 def create_location(location):
     # Get the id value of the last location in the list
